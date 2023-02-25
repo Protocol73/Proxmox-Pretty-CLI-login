@@ -6,8 +6,8 @@ What if you wanted more the the basic login banner Proxmox ships with?
 Colors and cool ASCII Block lettering, Sounds cool right? 
 
 If you follow this guide, you should end up with something like this:  
-The full code for the below image is in this repository as: ```pvebanner-BL-Example01```
 ![/etc/issue Banner 01](1-R720-etc-issue-Custom-Banner.png)
+The full code for the above image is in this repository as: ```pvebanner-BL-Example01```
 
 ### TO DO  
 + /etc/motd (After Login) [Not Documented here yet.]
