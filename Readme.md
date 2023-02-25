@@ -3,7 +3,7 @@
 ### Intro:
 
 What if you wanted more the the basic login banner Proxmox ships with?   
-Colors and cool ASCII Block lettering? Sounds cool right? 
+Colors and cool ASCII Block lettering, Sounds cool right? 
 
 Lets start with some file locations and basics,  
 
@@ -151,7 +151,7 @@ my $BLbanner ='\e[32m
 \e[0m';
 ```
 
-Then in-between: ```<<__EOBANNER;``` &  __EOBANNER  
+Then in-between: ```<<__EOBANNER;``` &  ```__EOBANNER```  
 
 I setup my banner 
 + *See the example files if you are not sure how it's setup*  
