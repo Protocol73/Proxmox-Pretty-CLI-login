@@ -1,0 +1,70 @@
+#!/usr/bin/perl
+
+use strict;
+use PVE::INotify;
+use PVE::Cluster;
+
+my $nodename = PVE::INotify::nodename();
+my $localip = PVE::Cluster::remote_node_ip($nodename, 1);
+
+my $xline = '\e[32m=\e[0m' x 110;
+my $banner = '';
+
+#Custom PVE Banner Data by Protocol73
+my $ipbridge1 = '\4{vmbr1}'; #Print IPv4 address of {Interface}.
+my $ipbridge2 = '\4{vmbr2}'; #Added for servers with mutiple {interfaces}
+my $clearterm = '\ec'; #clear the terminal
+my $fqdn = '\n.\O'; #What it says on the tin
+my $architecture = '\m'; # Same as 'uname -m'
+my $Kernel = '\r'; #PVE Kernel Version
+
+#ASCI Banner in Green
+my $BLbanner ='\e[32m
+██████╗ ███████╗██╗     ██╗     ███████╗██╗   ██╗██╗   ██╗███████╗    ██╗      █████╗ ██████╗ ███████╗
+██╔══██╗██╔════╝██║     ██║     ██╔════╝██║   ██║██║   ██║██╔════╝    ██║     ██╔══██╗██╔══██╗██╔════╝
+██████╔╝█████╗  ██║     ██║     █████╗  ██║   ██║██║   ██║█████╗      ██║     ███████║██████╔╝███████╗
+██╔══██╗██╔══╝  ██║     ██║     ██╔══╝  ╚██╗ ██╔╝██║   ██║██╔══╝      ██║     ██╔══██║██╔══██╗╚════██║
+██████╔╝███████╗███████╗███████╗███████╗ ╚████╔╝ ╚██████╔╝███████╗    ███████╗██║  ██║██████╔╝███████║
+╚═════╝ ╚══════╝╚══════╝╚══════╝╚══════╝  ╚═══╝   ╚═════╝ ╚══════╝    ╚══════╝╚═╝  ╚═╝╚═════╝ ╚══════╝
+\e[0m';
+
+#Custom if no IP set on Bridge1
+if ($ipbridge1){
+   $ipbridge1 = 'TRUNK';
+}else{
+	#IP is set, do nothing;
+}
+#END custom Banner Data
+
+if ($localip) {
+    $banner .= <<__EOBANNER;
+$clearterm
+$xline
+
+Welcome to the Proxmox Virtual Environment @
+$BLbanner
+$xline
+Please use your web browser to configure this server - connect to:
+
+FQDN: \e[35m $fqdn \e[0m
+PVE Cluster Management IP: \e[33m https://$localip:8006 \e[0m
+
+All Interfaces:
+	Bridge0:\e[34m $ipbridge1 \e[0m
+		10Gig Port#01 [Trunk to Switch Stack, Failover to 1Gig Ethernet [Trunk to Stack]
+	Bridge1:\e[34m $ipbridge2 \e[0m
+		10Gig Port#02 [VLAN2 on X4012] with failover to 1Gig Ethernet [VLAN2 @ Stack]
+
+$xline
+
+__EOBANNER
+
+}
+
+open(ISSUE, ">/etc/issue");
+
+print ISSUE $banner;
+
+close(ISSUE);
+
+exit (0);
