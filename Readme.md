@@ -81,7 +81,9 @@ Make a copy of the original as: pvebanner.bak0
 I name copies of original files as .bak0 {Backup 0}  
 That way if I want to restore or save another version of the file I can just Increment.  
 And restoring to the original with this process is as simple as:  
-``` cp \file\original\path.bak0 \file\original\path ```  
+``` 
+cp \file\original\path.bak0 \file\original\path
+```  
 Makes me a little more willing to break things :-)  
 
 Now, I want colors in my output so,
