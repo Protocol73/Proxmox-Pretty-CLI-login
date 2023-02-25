@@ -40,7 +40,7 @@ The choice is yours, I'll provide [a few examples] you can look at for ideas lat
 
 Next is the login banner via the issue file.  
 Proxmox generates this file via a [Perl script](https://forum.proxmox.com/threads/etc-issue-edits.54964/)  
-And the pvebanner service/command. (No docs for it, really.)
+And the pvebanner service/command. (No docs for it, really.)  
 If you write directly to the issue file,  
 the next time the service runs it will get overwritten. (at reboot)
 
@@ -51,15 +51,15 @@ As the issue file is still displayed to the system using [getty](https://manpage
 you can also use escape codes to display system info.  
 
 Here is the ones I am using:  
-	Note: I had never written any Perl before this project. :-|
+	Note: I had never written any Perl before this project. :-)
 
 ```
-my $ipbridge0 = '\4{vmbr0}'; #Print IPv4 address of {Interface}.
-my $ipbridge1 = '\4{vmbr1}'; #Added for servers with mutiple {interfaces}.
-my $clearterm = '\ec'; #clear the terminal
-my $fqdn = '\n.\O'; #What it says on the tin
-my $architecture = '\m'; # Same as 'uname -m'
-my $Kernel = '\r'; #PVE Kernel Version
+\4{vmbr0} #Print IPv4 address of {Interface}.
+\4{vmbr1} #Added for servers with mutiple {interfaces}.
+\ec #clear the terminal
+\n.\O #What it says on the tin
+\m # Same as 'uname -m'
+\r #PVE Kernel Version
 ```
 
 Also there is a:  
@@ -77,16 +77,15 @@ Now before we change the banner file lets make a copy of the original
 Make a copy of the original as: pvebanner.bak0  
 ``` sudo cp /usr/bin/pvebanner /usr/bin/pvebanner.bak0 ```
 
-I name copies of original as .bak0 {Back Up 0}  
+I name copies of original files as .bak0 {Backup 0}  
 That way if I want to restore or save another version of the file I can just Increment.  
 And restoring to the original with this process is as simple as:  
 ``` cp \file\original\path.bak0 \file\original\path ```  
-
-Makes me a little more willing to break things :-)
+Makes me a little more willing to break things :-)  
 
 Now, I want colors in my output so,
 I'll also be using [ANSI escape codes](https://en.wikipedia.org/wiki/ANSI_escape_code)  
-More info if you want to get crazy with it.
+More info if you want to get crazy with it.  
 
 + [Flogsoft - Colors & Formatting ](https://misc.flogisoft.com/bash/tip_colors_and_formatting)
 + [Stack Overflow](https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux#5947802)
