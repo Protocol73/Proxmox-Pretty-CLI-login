@@ -1,0 +1,69 @@
+#!/usr/bin/perl
+
+use strict;
+use PVE::INotify;
+use PVE::Cluster;
+
+my $nodename = PVE::INotify::nodename();
+my $localip = PVE::Cluster::remote_node_ip($nodename, 1);
+
+my $xline = '\e[34m=\e[0m' x 110;
+
+#Custom PVE Banner Data by Protocol73
+
+my $ipbridge0 = '\4{vmbr0}'; #Print IPv4 address of {Interface}.
+my $ipbridge1 = '\4{vmbr1}'; #Added for servers with mutiple {interfaces}.
+my $clearterm = '\ec'; #clear the terminal
+my $fqdn = '\n.\O'; #What it says on the tin
+my $architecture = '\m'; # Same as 'uname -m'
+my $Kernel = '\r'; #PVE Kernel Version
+
+#ASCI Banner in Blue
+my $CLbanner = '\e[34m
+ ██████╗██╗  ██╗███████╗███████╗████████╗███╗   ██╗██╗   ██╗████████╗    ██╗      █████╗ ██████╗ ███████╗
+██╔════╝██║  ██║██╔════╝██╔════╝╚══██╔══╝████╗  ██║██║   ██║╚══██╔══╝    ██║     ██╔══██╗██╔══██╗██╔════╝
+██║     ███████║█████╗  ███████╗   ██║   ██╔██╗ ██║██║   ██║   ██║       ██║     ███████║██████╔╝███████╗
+██║     ██╔══██║██╔══╝  ╚════██║   ██║   ██║╚██╗██║██║   ██║   ██║       ██║     ██╔══██║██╔══██╗╚════██║
+╚██████╗██║  ██║███████╗███████║   ██║   ██║ ╚████║╚██████╔╝   ██║       ███████╗██║  ██║██████╔╝███████║
+ ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝   ╚═╝  ╚═══╝ ╚═════╝    ╚═╝       ╚══════╝╚═╝  ╚═╝╚═════╝ ╚══════╝
+
+==============================================================================================================
+\e[0m';
+
+#END custom Banner Data
+
+#Begin banner
+my $banner = '';
+
+if ($localip) {
+    $banner .= <<__EOBANNER;
+$clearterm
+$xline
+
+Welcome to the Proxmox Virtual Environment @
+$CLbanner
+
+Please use your web browser to configure this server - connect to:
+
+FQDN: \e[35m $fqdn \e[0m
+	
+	PVE Cluster Management: \e[32m https://$localip:8006 \e[0m
+	Bridge0:\e[35m $ipbridge0 \e[0m 
+		(10Gig Port#01 with failover to 1Gig Ethernet Port#01)
+
+Kernel: \e[31m $Kernel \e[0m
+
+$xline
+__EOBANNER
+
+}
+#End Of Banner
+
+open(ISSUE, ">/etc/issue");
+
+#Write to /etc/issue file.
+print ISSUE $banner;
+
+close(ISSUE);
+
+exit (0);

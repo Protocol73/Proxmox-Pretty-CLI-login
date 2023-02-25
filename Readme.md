@@ -2,6 +2,9 @@
 
 ### Intro:
 
+What if you wanted more the the basic login banner Proxmox ships with?   
+Colors and cool ASCII Block lettering? Sounds cool right? 
+
 Lets start with some file locations and basics,  
 
 ```
@@ -122,12 +125,44 @@ In my case that is:
 I liked the look of an ASCII Banner, so I used [Patorjk.com](http://patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t=Proxmox)  
 "ANSI shadow" works for the look I want, but there is plenty of options.  
 
+Now as I like my code to be legible to my future myself and those after me:   
+I added this towards the top of the file:  
 
-Toss it all togeather and you should end up with something like this:
-The Full code for the below image is in this repository as: ```pvebanner-BL-Example01```
+```
+my $ipbridge0 = '\4{vmbr0}'; #Print IPv4 address of {Interface}.
+my $ipbridge1 = '\4{vmbr1}'; #Added for servers with mutiple {interfaces}.
+my $clearterm = '\ec'; #clear the terminal
+my $fqdn = '\n.\O'; #What it says on the tin
+my $architecture = '\m'; # Same as 'uname -m'
+my $Kernel = '\r'; #PVE Kernel Version
+```
+
+Back to that: ``` $xline ``` line...
+
+I changed it to: ``` my $xline = '\e[32m=\e[0m' x 110; ```  
+This Changes the color to green, the item printed to " = "  and the times if is printed to: 110   
+
+Then I added my banner as:
+```
+my $BLbanner ='\e[32m
+  
+  **Banner ASCII Text Here**
+  
+\e[0m';
+```
+
+Then in-between: ```<<__EOBANNER;``` &  __EOBANNER  
+
+I setup my banner 
++ *See the example files if you are not sure how it's setup*  
++ Don't put anything you want in the banner on the same line as the EOBANNER lines
+
+Toss it all together and you should end up with something like this:  
+The full code for the below image is in this repository as: ```pvebanner-BL-Example01```
 
 
 ![/etc/issue Banner 01](1-R720-etc-issue-Custom-Banner.png)
 
+Example 02: ```
 
-
+![/etc/issue Banner 02](1-R430-etc-issue-Custom-Banner.png)
