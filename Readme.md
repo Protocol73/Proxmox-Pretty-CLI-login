@@ -2,7 +2,7 @@
 
 ### Intro:
 
-What if you wanted more the the basic login banner Proxmox ships with?   
+What if you wanted more then the basic login banner Proxmox ships with?   
 Colors and cool ASCII Block lettering, Sounds cool right? 
 
 If you follow this guide, you should end up with something like this:  
@@ -36,11 +36,11 @@ The full code for the above image is in this repository as: ```pvebanner-BL-Exam
  - === "Unauthorized access is prohibited..." ==
  - ================================  
  
-The choice is yours, I'll provide [a few examples] you can look at for ideas later. [TO DO]()  
+The choice is yours, I'll provide a few examples you can look at for ideas. [TO DO]()  
 
 Next is the login banner via the issue file.  
-Proxmox generates this file via a [Perl script](https://forum.proxmox.com/threads/etc-issue-edits.54964/)  
-And the pvebanner service/command. (No docs for it, really.)  
+Proxmox generates this file via a Perl script  
+And the [pvebanner service/command](https://forum.proxmox.com/threads/etc-issue-edits.54964/). (No docs for it, really.)  
 If you write directly to the issue file,  
 the next time the service runs it will get overwritten. (at reboot)
 
@@ -66,7 +66,7 @@ Also there is a:
 ``` 
 	my $xline = '-' x 78;
 ```
-That Prints the top & bottom bars, We'll come back to that.
+That prints the top & bottom bars, we'll come back to that.
 
 ### Ready to Make Changes? 
 
@@ -131,7 +131,7 @@ Run the script to update the /etc/issue file: ```sudo pvebanner ```
 Check your new output: ```sudo getty --show-issue ```
 Or you can just: ``` cat /etc/issue ```
 
-I recommend that you check how it looks via anyway the server will be accessed. (via CLI)
+I recommend that you check how it looks via any method CLI will be used to access the server.
 
 In my case that is: 
 + KVM @ the Server Rack
