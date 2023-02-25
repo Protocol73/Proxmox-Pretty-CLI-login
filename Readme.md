@@ -75,6 +75,7 @@ Now before we change the banner file lets make a copy of the original
 **NOTE: I am running as a user with sudo;**
 
 Make a copy of the original as: pvebanner.bak0  
+
 ``` sudo cp /usr/bin/pvebanner /usr/bin/pvebanner.bak0 ```
 
 I name copies of original files as .bak0 {Backup 0}  
